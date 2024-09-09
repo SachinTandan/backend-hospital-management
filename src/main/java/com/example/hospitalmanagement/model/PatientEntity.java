@@ -23,7 +23,7 @@ public class PatientEntity {
 
     @Column(name = "last_name")
     private String lastName;
-    @Column(name = "date_of_birth")
-    private LocalDate dateOfBirth; // Use LocalDate for dates
+
+    private String date_of_birth; // Use LocalDate for dates
 
 }

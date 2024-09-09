@@ -1,0 +1,64 @@
+# Ignore Maven and Gradle build directories
+target/
+build/
+
+# Ignore Maven specific files
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+
+# Ignore IntelliJ IDEA project files
+.idea/
+*.iml
+*.iws
+out/
+
+# Ignore Eclipse project files
+.classpath
+.project
+.settings/
+
+# Ignore NetBeans project files
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+# Ignore STS (Spring Tool Suite) project files
+.springBeans
+
+# Ignore VS Code files
+.vscode/
+
+# Ignore log files
+*.log
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore temporary files
+*.swp
+*.swo
+*.tmp
+*.bak
+
+# Ignore package-lock and yarn.lock if you're using npm or Yarn
+package-lock.json
+yarn.lock
+
+# Ignore IDE specific directories
+/.idea/
+/*.iml
+
+# Ignore dependency directories
+node_modules/
+target/
+build/
+
+# Ignore application-specific files
+.env
