@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/mydatabase?useSSL=false&serverTimezone=UTC
+    username: myuser  # This should match MYSQL_USER from docker-compose.yml
+    password: mypassword  # This should match MYSQL_PASSWORD from docker-compose.yml
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update  # This will update the schema based on your entity classes
