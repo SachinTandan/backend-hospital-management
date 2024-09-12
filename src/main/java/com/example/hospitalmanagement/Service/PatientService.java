@@ -4,12 +4,15 @@ import com.example.hospitalmanagement.DTO.PatientDTO;
 import com.example.hospitalmanagement.Repo.PatientRepository;
 import com.example.hospitalmanagement.model.PatientEntity;
 import com.example.hospitalmanagement.utilities.PatientMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+
 @Service
+@Slf4j
 public class PatientService {
 
     @Autowired
@@ -22,7 +25,8 @@ public class PatientService {
 
     public PatientDTO createPatient(PatientDTO patientDTO) {
         PatientEntity patientEntity = PatientMapper.toEntity(patientDTO);
-        PatientEntity savedEntity = patientRepository.save(patientEntity); // id auto-generated
+        PatientEntity savedEntity = patientRepository.save(patientEntity);
+        log.info("Patient created in database " + savedEntity);
         return PatientMapper.toDTO(savedEntity);
     }
 }

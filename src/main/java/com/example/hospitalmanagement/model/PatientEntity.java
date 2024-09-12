@@ -24,6 +24,8 @@ public class PatientEntity {
     @Column(name = "last_name")
     private String lastName;
 
-    private String date_of_birth; // Use LocalDate for dates
+    private LocalDate dateOfBirth;// Use LocalDate for dates
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
 }

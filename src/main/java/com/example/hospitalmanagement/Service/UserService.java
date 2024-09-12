@@ -1,11 +1,11 @@
 package com.example.hospitalmanagement.Service;
 
 
-import com.example.hospitalmanagement.DTO.UserRequestDTO;
-import com.example.hospitalmanagement.DTO.UserResponseDTO;
+import com.example.hospitalmanagement.DTO.AuthenticateUsersRequest;
+import com.example.hospitalmanagement.DTO.UserRegistrationRequestDTO;
 import com.example.hospitalmanagement.Repo.UserRepo;
+import com.example.hospitalmanagement.model.Role;
 import com.example.hospitalmanagement.model.UsersEntity;
-import com.example.hospitalmanagement.utilities.UsersMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,8 +13,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 @Slf4j
@@ -26,8 +24,6 @@ public class UserService {
     @Autowired
     AuthenticationManager authManager;
 
-    @Autowired
-    private UserRepo repo;
 
     @Autowired
     UserRepo usersRepository;
@@ -35,28 +31,36 @@ public class UserService {
 
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
-//    public UserResponseDTO register(UserRequestDTO user) {
+//    public AuthenticateUsersRequest register(UserRegistrationRequestDTO user) {
 //        user.setPassword(encoder.encode(user.getPassword()));
 //        log.debug("save user");
 //        repo.save(user);
 //        return user;
 //    }
-    public UserResponseDTO createUser(UserRequestDTO usersDTO) {
-        UsersEntity usersEntity = UsersMapper.toEntity(usersDTO);
-        // Encode the password before saving
-        String encodedPassword = encoder.encode(usersDTO.getPassword());
-        usersEntity.setPassword(encodedPassword);
-        usersRepository.save(usersEntity);
-        return UsersMapper.toResponseDTO(usersEntity);
+    public void createUser(UserRegistrationRequestDTO usersDTO) {
+        UsersEntity usersEntity = UsersEntity.builder()
+                .username(usersDTO.getUsername())
+                .password(encoder.encode(usersDTO.getPassword()))
+                .firstName(usersDTO.getFirstName())
+                .email(usersDTO.getEmail())
+                .lastName(usersDTO.getLastName())
+                .dateOfBirth(usersDTO.getDateOfBirth())
+                .role(Role.ADMIN)
+                .build();
+        UsersEntity user = usersRepository.save(usersEntity);
+        log.info("User created: " + user);
+
     }
-    public UserResponseDTO getUserById(int id) {
-        Optional<UsersEntity> usersEntity = usersRepository.findById(id);
-        return usersEntity.map(UsersMapper::toResponseDTO).orElse(null);
-    }
-    public String verify(UserRequestDTO user) {
-        Authentication authentication = authManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
+//    public AuthenticateUsersRequest getUserById(int id) {
+//        Optional<UsersEntity> usersEntity = usersRepository.findById(id);
+//        return usersEntity.map(UsersMapper::toResponseDTO).orElse(null);
+//    }
+    public String verify(AuthenticateUsersRequest usersLoginRequest) {
+        Authentication authentication = authManager.authenticate(new UsernamePasswordAuthenticationToken(usersLoginRequest.getUsername(), usersLoginRequest.getPassword()));
         if (authentication.isAuthenticated()) {
-            return jwtService.generateToken(user.getUsername());
+            String token = jwtService.generateToken(usersLoginRequest.getUsername());
+            log.info("Token generated: " + token);
+            return token;
         } else {
             return "fail";
         }

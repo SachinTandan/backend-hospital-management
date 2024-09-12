@@ -6,4 +6,4 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
-      ddl-auto: update  # This will update the schema based on your entity classes
+      ddl-auto: create  # This will update the schema based on your entity classes

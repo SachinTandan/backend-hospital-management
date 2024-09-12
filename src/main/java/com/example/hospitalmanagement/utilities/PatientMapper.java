@@ -9,7 +9,7 @@ public class PatientMapper {
         PatientDTO dto = new PatientDTO();
         dto.setFirstName(patientEntity.getFirstName());
         dto.setLastName(patientEntity.getLastName());
-        dto.setDateOfBirth(patientEntity.getDate_of_birth());
+        dto.setDateOfBirth(patientEntity.getDateOfBirth());
         return dto;
     }
 
@@ -18,7 +18,7 @@ public class PatientMapper {
         PatientEntity patientEntity = new PatientEntity();
         patientEntity.setFirstName(dto.getFirstName());
         patientEntity.setLastName(dto.getLastName());
-        patientEntity.setDate_of_birth(dto.getDateOfBirth());
+        patientEntity.setDateOfBirth(dto.getDateOfBirth());
         return patientEntity;
     }
 }
