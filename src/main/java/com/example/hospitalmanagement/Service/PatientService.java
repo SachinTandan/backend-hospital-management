@@ -2,6 +2,7 @@ package com.example.hospitalmanagement.Service;
 
 import com.example.hospitalmanagement.DTO.PatientDTO;
 import com.example.hospitalmanagement.Repo.PatientRepository;
+import com.example.hospitalmanagement.exceptionHandling.ResourceNotFoundException;
 import com.example.hospitalmanagement.model.PatientEntity;
 import com.example.hospitalmanagement.utilities.PatientMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +21,7 @@ public class PatientService {
 
     public PatientDTO getPatientById(int id) {
         Optional<PatientEntity> patientEntity = patientRepository.findById(id);
-        return patientEntity.map(PatientMapper::toDTO).orElse(null);
+        return patientEntity.map(PatientMapper::toDTO).orElseThrow(() -> new ResourceNotFoundException("Patient not found with id: " + id));
     }
 
     public PatientDTO createPatient(PatientDTO patientDTO) {

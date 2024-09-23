@@ -25,7 +25,7 @@ public class PatientController {
     @GetMapping("/{id}")
     public ResponseEntity<PatientDTO> getPatient(@PathVariable int id) {
         PatientDTO patientDTO = patientService.getPatientById(id);
-        return ResponseEntity.status(HttpStatus.OK).body(patientDTO);
+        return ResponseEntity.ok(patientDTO);
     }
 
     @GetMapping("/csrf-token")

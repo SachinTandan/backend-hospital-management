@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @Slf4j
 @RequestMapping("/api/users")
@@ -22,7 +24,7 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody UserRegistrationRequestDTO user) {
+    public ResponseEntity<String> register(@Valid @RequestBody UserRegistrationRequestDTO user) {
         log.info("Register new user " + user);
         userService.createUser(user);
         log.info("User registered successfully ");
@@ -35,12 +37,5 @@ public class UserController {
         log.info("Logging user {} ", userLoginRequest.getUsername());
         return userService.verify(userLoginRequest);
     }
-//    @GetMapping("/{id}")
-//    public ResponseEntity<UserLoginRequest> getUser(@PathVariable int id) {
-//        UserLoginRequest userResponseDTO = userService.getUserById(id);
-//        if (userResponseDTO != null) {
-//            return ResponseEntity.ok(userResponseDTO);
-//        }
-//        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-//    }
+
 }

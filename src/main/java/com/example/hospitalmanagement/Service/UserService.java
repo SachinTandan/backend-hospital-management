@@ -37,6 +37,7 @@ public class UserService {
 //        return user;
 //    }
     public void createUser(UserRegistrationRequestDTO usersDTO) {
+        log.info("Creating new user: {}", usersDTO.getUsername());
         UsersEntity usersEntity = UsersEntity.builder()
                 .username(usersDTO.getUsername())
                 .password(encoder.encode(usersDTO.getPassword()))
@@ -47,14 +48,12 @@ public class UserService {
                 .role(usersDTO.getRole())
                 .build();
         UsersEntity user = usersRepository.save(usersEntity);
-        log.info("User created: " + user);
+        log.info("User created successfully: {}", user.getUsername());
+
 
     }
 
-    //    public UserLoginRequest getUserById(int id) {
-//        Optional<UsersEntity> usersEntity = usersRepository.findById(id);
-//        return usersEntity.map(UsersMapper::toResponseDTO).orElse(null);
-//    }
+
     public String verify(UserLoginRequest usersLoginRequest) {
         Authentication authentication = authManager.authenticate(new UsernamePasswordAuthenticationToken(usersLoginRequest.getUsername(), usersLoginRequest.getPassword()));
         if (authentication.isAuthenticated()) {
