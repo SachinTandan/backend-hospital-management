@@ -1,7 +1,7 @@
 package com.example.hospitalmanagement.Service;
 
 
-import com.example.hospitalmanagement.DTO.AuthenticateUsersRequest;
+import com.example.hospitalmanagement.DTO.UserLoginRequest;
 import com.example.hospitalmanagement.DTO.UserRegistrationRequestDTO;
 import com.example.hospitalmanagement.Repo.UserRepo;
 import com.example.hospitalmanagement.model.UsersEntity;
@@ -30,7 +30,7 @@ public class UserService {
 
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
-//    public AuthenticateUsersRequest register(UserRegistrationRequestDTO user) {
+//    public UserLoginRequest register(UserRegistrationRequestDTO user) {
 //        user.setPassword(encoder.encode(user.getPassword()));
 //        log.debug("save user");
 //        repo.save(user);
@@ -51,11 +51,11 @@ public class UserService {
 
     }
 
-    //    public AuthenticateUsersRequest getUserById(int id) {
+    //    public UserLoginRequest getUserById(int id) {
 //        Optional<UsersEntity> usersEntity = usersRepository.findById(id);
 //        return usersEntity.map(UsersMapper::toResponseDTO).orElse(null);
 //    }
-    public String verify(AuthenticateUsersRequest usersLoginRequest) {
+    public String verify(UserLoginRequest usersLoginRequest) {
         Authentication authentication = authManager.authenticate(new UsernamePasswordAuthenticationToken(usersLoginRequest.getUsername(), usersLoginRequest.getPassword()));
         if (authentication.isAuthenticated()) {
             UsersEntity user = usersRepository.findByUsername(usersLoginRequest.getUsername());

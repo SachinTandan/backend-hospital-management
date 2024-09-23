@@ -1,7 +1,7 @@
 package com.example.hospitalmanagement.controller;
 
 
-import com.example.hospitalmanagement.DTO.AuthenticateUsersRequest;
+import com.example.hospitalmanagement.DTO.UserLoginRequest;
 import com.example.hospitalmanagement.DTO.UserRegistrationRequestDTO;
 import com.example.hospitalmanagement.Service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -31,13 +31,13 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody AuthenticateUsersRequest userLoginRequest) {
+    public String login(@RequestBody UserLoginRequest userLoginRequest) {
         log.info("Logging user {} ", userLoginRequest.getUsername());
         return userService.verify(userLoginRequest);
     }
 //    @GetMapping("/{id}")
-//    public ResponseEntity<AuthenticateUsersRequest> getUser(@PathVariable int id) {
-//        AuthenticateUsersRequest userResponseDTO = userService.getUserById(id);
+//    public ResponseEntity<UserLoginRequest> getUser(@PathVariable int id) {
+//        UserLoginRequest userResponseDTO = userService.getUserById(id);
 //        if (userResponseDTO != null) {
 //            return ResponseEntity.ok(userResponseDTO);
 //        }
