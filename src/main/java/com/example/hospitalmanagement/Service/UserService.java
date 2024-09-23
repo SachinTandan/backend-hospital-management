@@ -30,28 +30,21 @@ public class UserService {
 
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
-//    public UserLoginRequest register(UserRegistrationRequestDTO user) {
-//        user.setPassword(encoder.encode(user.getPassword()));
-//        log.debug("save user");
-//        repo.save(user);
-//        return user;
-//    }
-    public void createUser(UserRegistrationRequestDTO usersDTO) {
-        log.info("Creating new user: {}", usersDTO.getUsername());
-        UsersEntity usersEntity = UsersEntity.builder()
-                .username(usersDTO.getUsername())
-                .password(encoder.encode(usersDTO.getPassword()))
-                .firstName(usersDTO.getFirstName())
-                .email(usersDTO.getEmail())
-                .lastName(usersDTO.getLastName())
-                .dateOfBirth(usersDTO.getDateOfBirth())
-                .role(usersDTO.getRole())
-                .build();
-        UsersEntity user = usersRepository.save(usersEntity);
-        log.info("User created successfully: {}", user.getUsername());
 
-
-    }
+public void createUser(UserRegistrationRequestDTO usersDTO) {
+    log.info("Creating new user: {}", usersDTO.getUsername());
+    UsersEntity usersEntity = UsersEntity.builder()
+            .username(usersDTO.getUsername())
+            .password(encoder.encode(usersDTO.getPassword()))
+            .firstName(usersDTO.getFirstName())
+            .email(usersDTO.getEmail())
+            .lastName(usersDTO.getLastName())
+            .dateOfBirth(usersDTO.getDateOfBirth())
+            .role(usersDTO.getRole())
+            .build();
+    UsersEntity user = usersRepository.save(usersEntity);
+    log.info("User created successfully: {}", user.getUsername());
+}
 
 
     public String verify(UserLoginRequest usersLoginRequest) {

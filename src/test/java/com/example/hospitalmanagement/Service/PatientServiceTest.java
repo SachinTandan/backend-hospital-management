@@ -2,6 +2,7 @@ package com.example.hospitalmanagement.Service;
 
 import com.example.hospitalmanagement.DTO.PatientDTO;
 import com.example.hospitalmanagement.Repo.PatientRepository;
+import com.example.hospitalmanagement.exceptionHandling.ResourceNotFoundException;
 import com.example.hospitalmanagement.model.PatientEntity;
 import com.example.hospitalmanagement.utilities.PatientMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,8 +15,7 @@ import org.mockito.MockitoAnnotations;
 import java.time.LocalDate;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class PatientServiceTest {
@@ -57,10 +57,9 @@ class PatientServiceTest {
         int patientId = 1;
 //When: the findById method of patientRepository is called with patientId and returns an empty Optional
         when(patientRepository.findById(patientId)).thenReturn(Optional.empty());
-//Then: call the getPatientById method of PatientService with patientId and assert the result is null
-        PatientDTO result = patientService.getPatientById(patientId);
-
-        assertNull(result);
+        // Then: call the getPatientById method of PatientService with patientId and assert that a ResourceNotFoundException is thrown
+        assertThrows(ResourceNotFoundException.class, () -> patientService.getPatientById(patientId));
+    // Verify the findById method of patientRepository is called once with patientId
         verify(patientRepository, times(1)).findById(patientId);
     }
 
