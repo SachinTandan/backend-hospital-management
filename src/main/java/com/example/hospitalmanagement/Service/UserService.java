@@ -4,7 +4,6 @@ package com.example.hospitalmanagement.Service;
 import com.example.hospitalmanagement.DTO.AuthenticateUsersRequest;
 import com.example.hospitalmanagement.DTO.UserRegistrationRequestDTO;
 import com.example.hospitalmanagement.Repo.UserRepo;
-import com.example.hospitalmanagement.model.Role;
 import com.example.hospitalmanagement.model.UsersEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,20 +44,22 @@ public class UserService {
                 .email(usersDTO.getEmail())
                 .lastName(usersDTO.getLastName())
                 .dateOfBirth(usersDTO.getDateOfBirth())
-                .role(Role.ADMIN)
+                .role(usersDTO.getRole())
                 .build();
         UsersEntity user = usersRepository.save(usersEntity);
         log.info("User created: " + user);
 
     }
-//    public AuthenticateUsersRequest getUserById(int id) {
+
+    //    public AuthenticateUsersRequest getUserById(int id) {
 //        Optional<UsersEntity> usersEntity = usersRepository.findById(id);
 //        return usersEntity.map(UsersMapper::toResponseDTO).orElse(null);
 //    }
     public String verify(AuthenticateUsersRequest usersLoginRequest) {
         Authentication authentication = authManager.authenticate(new UsernamePasswordAuthenticationToken(usersLoginRequest.getUsername(), usersLoginRequest.getPassword()));
         if (authentication.isAuthenticated()) {
-            String token = jwtService.generateToken(usersLoginRequest.getUsername());
+            UsersEntity user = usersRepository.findByUsername(usersLoginRequest.getUsername());
+            String token = jwtService.generateToken(usersLoginRequest.getUsername(), user.getRole());
             log.info("Token generated: " + token);
             return token;
         } else {

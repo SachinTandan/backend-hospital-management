@@ -1,5 +1,6 @@
 package com.example.hospitalmanagement.Service;
 
+import com.example.hospitalmanagement.model.Role;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -31,8 +32,9 @@ public class JWTService {
         }
     }
 
-    public String generateToken(String username) {
+    public String generateToken(String username, Role role) {
         Map<String, Object> claims = new HashMap<>();
+        claims.put("role", role.name());
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(username)
@@ -58,7 +60,7 @@ public class JWTService {
 
 
 
-    private Claims extractAllClaims(String token) {
+    public Claims extractAllClaims(String token) {
         return Jwts.parser()
                 .setSigningKey(getKey())
                 .build()

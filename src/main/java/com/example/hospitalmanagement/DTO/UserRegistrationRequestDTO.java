@@ -1,5 +1,6 @@
 package com.example.hospitalmanagement.DTO;
 
+import com.example.hospitalmanagement.model.Role;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -16,6 +17,7 @@ public class UserRegistrationRequestDTO {
     private String lastName;
     private LocalDate dateOfBirth;
     private String email;
+    private Role role;
     // Getters and Setters
 
 }

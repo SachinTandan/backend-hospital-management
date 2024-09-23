@@ -22,12 +22,12 @@ public class UsersEntity {
     @Column(nullable = false, unique = true)
     private String username;
     private String password;
-    @Enumerated(EnumType.STRING)
-    private Role role;
     private String firstName;
     private String lastName;
     private String email;
     private LocalDate dateOfBirth;
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
 }
 
