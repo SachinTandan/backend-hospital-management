@@ -2,7 +2,6 @@ package com.example.hospitalmanagement.DTO;
 
 import lombok.*;
 
-import java.time.LocalDate;
 
 @Builder
 @AllArgsConstructor
