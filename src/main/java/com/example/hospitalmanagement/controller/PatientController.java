@@ -20,7 +20,6 @@ public class PatientController {
     @Autowired
     private PatientService patientService;
 
-//    private List<PatientEntity> patients = new ArrayList<>(List.of(new PatientEntity(1, "Sachin", "lastName", "date oof birth"), new PatientEntity(2, "Sachin2", "LastName2", "dob2 birth2")));
 
     @PreAuthorize("hasAnyRole('ADMIN', 'DOCTOR', 'NURSE', 'PATIENT')")
     @GetMapping("/{id}")
@@ -39,7 +38,7 @@ public class PatientController {
     @PostMapping
     public ResponseEntity<PatientDTO> createPatient(@RequestBody PatientDTO patientDTO) {
 
-      // id auto-generated
+
         log.info("Patient created");
         PatientDTO createdPatient = patientService.createPatient(patientDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdPatient);
